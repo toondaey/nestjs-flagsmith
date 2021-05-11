@@ -1,0 +1,25 @@
+{
+  "extends": ["config:base"],
+  "semanticCommits": "enabled",
+  "labels": ["dependencies"],
+  "assigneesFromCodeOwners": true,
+  "packageRules": [
+    {
+      "depTypeList": ["devDependencies"],
+      "automerge": true
+    },
+    {
+      "updateTypes": ["major"],
+      "labels": ["major-update", "dependencies"]
+    },
+    {
+      "updateTypes": ["minor"],
+      "labels": ["minor-update", "dependencies"]
+    },
+    {
+      "updateTypes": ["patch"],
+      "labels": ["patch-update", "dependencies"]
+    }
+  ],
+  "schedule": ["every weekday"]
+}
