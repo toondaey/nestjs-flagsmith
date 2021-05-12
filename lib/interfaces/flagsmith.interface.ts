@@ -9,8 +9,19 @@ export interface IFlagsmithOptionsFactory {
 
 export interface IFlagsmithAsyncOptions
   extends Pick<ModuleMetadata, 'imports'> {
+  inject?: Array<any>;
+}
+
+export interface IFlagsmithUseFactoryAsyncOptions
+  extends IFlagsmithAsyncOptions {
   useFactory: () => IFlagsmithOptions;
+}
+
+export interface IFlagsmithUseClassAsyncOptions extends IFlagsmithAsyncOptions {
   useClass: Type<IFlagsmithOptionsFactory>;
+}
+
+export interface IFlagsmithUseExistingAsyncOptions
+  extends IFlagsmithAsyncOptions {
   useExisting: Type<IFlagsmithOptionsFactory>;
-  inject: Array<any>;
 }
