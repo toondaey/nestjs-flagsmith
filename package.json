@@ -1,6 +1,6 @@
 {
   "name": "@t00nday/nestjs-flagsmith",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A Nest Js wrapper for flagsmith.",
   "main": "index.js",
   "types": "index.d.ts",
