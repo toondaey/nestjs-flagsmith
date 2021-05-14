@@ -7,9 +7,10 @@ import {
 } from './flagsmith.constant';
 import {
   IFlagsmithOptions,
-  IFlagsmithUseFactoryAsyncOptions,
+  IFlagsmithAsyncOptions,
   IFlagsmithOptionsFactory,
   IFlagsmithUseClassAsyncOptions,
+  IFlagsmithUseFactoryAsyncOptions,
   IFlagsmithUseExistingAsyncOptions,
 } from './interfaces/flagsmith.interface';
 import { FlagsmithService } from './flagsmith.service';
@@ -33,12 +34,7 @@ export class FlagsmithModule {
     };
   }
 
-  static registerAsync(
-    options:
-      | IFlagsmithUseFactoryAsyncOptions
-      | IFlagsmithUseClassAsyncOptions
-      | IFlagsmithUseExistingAsyncOptions,
-  ): DynamicModule {
+  static registerAsync(options: IFlagsmithAsyncOptions): DynamicModule {
     return {
       module: FlagsmithModule,
       providers: [
@@ -59,10 +55,7 @@ export class FlagsmithModule {
   }
 
   private static createAsyncProviders(
-    options:
-      | IFlagsmithUseFactoryAsyncOptions
-      | IFlagsmithUseClassAsyncOptions
-      | IFlagsmithUseExistingAsyncOptions,
+    options: IFlagsmithAsyncOptions,
   ): Provider[] {
     if (
       (options as IFlagsmithUseExistingAsyncOptions).useExisting ||
@@ -80,10 +73,7 @@ export class FlagsmithModule {
   }
 
   private static createAsyncOptionsProvider(
-    options:
-      | IFlagsmithUseFactoryAsyncOptions
-      | IFlagsmithUseClassAsyncOptions
-      | IFlagsmithUseExistingAsyncOptions,
+    options: IFlagsmithAsyncOptions,
   ): Provider {
     if ((options as IFlagsmithUseFactoryAsyncOptions).useFactory) {
       return {
@@ -99,7 +89,7 @@ export class FlagsmithModule {
     ]);
 
     return {
-      provide: FLAGSMITH_INSTANCE_TOKEN,
+      provide: FLAGSMITH_OPTIONS_TOKEN,
       useFactory: (factory: IFlagsmithOptionsFactory) =>
         factory.createFlagsmithOptions(),
       inject,

@@ -7,12 +7,12 @@
     "noLib": false,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "target": "es6",
-    "sourceMap": false,
+    "target": "es2017",
+    "sourceMap": true,
     "outDir": "./dist",
     "rootDir": "./lib",
     "skipLibCheck": true
   },
   "include": ["lib/**/*.ts"],
-  "exclude": ["test"]
+  "exclude": ["tests"]
 }

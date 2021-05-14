@@ -1,13 +1,14 @@
-import flagsmith, {
+import {
   getFlags,
   getTrait,
   getValue,
   setTrait,
   hasFeature,
-  getUserIdentity,
   getFlagsForUser,
+  getUserIdentity,
 } from 'flagsmith-nodejs';
-import { from, Observable, of } from 'rxjs';
+import { from, Observable } from 'rxjs';
+import * as flagsmith from 'flagsmith-nodejs';
 import { Inject, Injectable } from '@nestjs/common';
 
 import { FLAGSMITH_INSTANCE_TOKEN } from './flagsmith.constant';
@@ -15,7 +16,7 @@ import { FLAGSMITH_INSTANCE_TOKEN } from './flagsmith.constant';
 @Injectable()
 export class FlagsmithService {
   @Inject(FLAGSMITH_INSTANCE_TOKEN)
-  private flagsmith: typeof flagsmith;
+  private readonly flagsmith!: typeof flagsmith;
 
   hasFeature(
     key: string,
@@ -33,7 +34,11 @@ export class FlagsmithService {
   ): Observable<
     ReturnType<typeof hasFeature> extends Promise<infer T> ? T : never
   > {
-    return from(this.flagsmith.hasFeature(...params));
+    return from(
+      this.flagsmith.hasFeature(
+        ...(params as Required<Parameters<typeof hasFeature>>),
+      ),
+    );
   }
 
   getValue(
@@ -52,7 +57,11 @@ export class FlagsmithService {
   ): Observable<
     ReturnType<typeof getValue> extends Promise<infer T> ? T : never
   > {
-    return from(this.flagsmith.getValue(...params));
+    return from(
+      this.flagsmith.getValue(
+        ...(params as Required<Parameters<typeof getValue>>),
+      ),
+    );
   }
 
   getTrait(
@@ -63,18 +72,18 @@ export class FlagsmithService {
     return from(this.flagsmith.getTrait(...params));
   }
 
-  getFlags(
-    ...params: Parameters<typeof getFlags>
-  ): Observable<
+  getFlags(): Observable<
     ReturnType<typeof getFlags> extends Promise<infer T> ? T : never
   > {
-    return from(this.flagsmith.getFlags(...params));
+    return from(this.flagsmith.getFlags());
   }
 
   getFlagsForUser(
     ...params: Parameters<typeof getFlagsForUser>
   ): Observable<
-    ReturnType<typeof getFlagsForUser> extends Promise<infer T> ? T : never
+    ReturnType<typeof getFlagsForUser> extends Promise<infer T>
+      ? T
+      : never
   > {
     return from(this.flagsmith.getFlagsForUser(...params));
   }
@@ -82,14 +91,18 @@ export class FlagsmithService {
   getUserIdentity(
     ...params: Parameters<typeof getUserIdentity>
   ): Observable<
-    ReturnType<typeof getUserIdentity> extends Promise<infer T> ? T : never
+    ReturnType<typeof getUserIdentity> extends Promise<infer T>
+      ? T
+      : never
   > {
     return from(this.flagsmith.getUserIdentity(...params));
   }
 
   setTrait(
     ...params: Parameters<typeof setTrait>
-  ): Observable<ReturnType<typeof setTrait>> {
-    return of(this.flagsmith.setTrait(...params));
+  ): Observable<
+    ReturnType<typeof setTrait> extends Promise<infer T> ? T : never
+  > {
+    return from(this.flagsmith.setTrait(...params) as never);
   }
 }

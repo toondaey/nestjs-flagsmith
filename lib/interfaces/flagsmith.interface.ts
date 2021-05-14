@@ -7,21 +7,27 @@ export interface IFlagsmithOptionsFactory {
   createFlagsmithOptions(): IFlagsmithOptions;
 }
 
-export interface IFlagsmithAsyncOptions
+export interface IFlagsmithAsyncAbstractOptions
   extends Pick<ModuleMetadata, 'imports'> {
   inject?: Array<any>;
 }
 
 export interface IFlagsmithUseFactoryAsyncOptions
-  extends IFlagsmithAsyncOptions {
+  extends IFlagsmithAsyncAbstractOptions {
   useFactory: () => IFlagsmithOptions;
 }
 
-export interface IFlagsmithUseClassAsyncOptions extends IFlagsmithAsyncOptions {
+export interface IFlagsmithUseClassAsyncOptions
+  extends IFlagsmithAsyncAbstractOptions {
   useClass: Type<IFlagsmithOptionsFactory>;
 }
 
 export interface IFlagsmithUseExistingAsyncOptions
-  extends IFlagsmithAsyncOptions {
+  extends IFlagsmithAsyncAbstractOptions {
   useExisting: Type<IFlagsmithOptionsFactory>;
 }
+
+export type IFlagsmithAsyncOptions =
+  | IFlagsmithUseFactoryAsyncOptions
+  | IFlagsmithUseClassAsyncOptions
+  | IFlagsmithUseExistingAsyncOptions;

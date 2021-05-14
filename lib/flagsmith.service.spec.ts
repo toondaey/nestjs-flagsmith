@@ -1,6 +1,7 @@
 import * as faker from 'faker';
-import flagsmith, { IFlags, ITraits, IUserIdentity } from 'flagsmith-nodejs';
+import * as flagsmith from 'flagsmith-nodejs';
 import { Test, TestingModule } from '@nestjs/testing';
+import { IFlags, ITraits, IUserIdentity } from 'flagsmith-nodejs';
 
 import { FlagsmithService } from './flagsmith.service';
 import { FLAGSMITH_INSTANCE_TOKEN } from './flagsmith.constant';
@@ -18,7 +19,10 @@ describe('FlagsmithService', () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         FlagsmithService,
-        { provide: FLAGSMITH_INSTANCE_TOKEN, useValue: flagsmithMock },
+        {
+          provide: FLAGSMITH_INSTANCE_TOKEN,
+          useValue: flagsmithMock,
+        },
       ],
     }).compile();
 
@@ -37,13 +41,13 @@ describe('FlagsmithService', () => {
     expect(service).toBeDefined();
   });
 
-  it('should check if feature exists', (complete) => {
+  it('should check if feature exists', complete => {
     flagsmithMock.hasFeature = jest
       .fn()
       .mockImplementationOnce(async () => booleanResult);
 
     service.hasFeature(faker.datatype.string()).subscribe({
-      next: (v) => {
+      next: v => {
         expect(typeof v).toBe('boolean');
         expect(v).toEqual(booleanResult);
       },
@@ -51,13 +55,13 @@ describe('FlagsmithService', () => {
     });
   });
 
-  it('should get value', (complete) => {
+  it('should get value', complete => {
     flagsmithMock.getValue = jest
       .fn()
       .mockImplementationOnce(async () => booleanResult);
 
     service.getValue(faker.datatype.string()).subscribe({
-      next: (v) => {
+      next: v => {
         expect(typeof v).toBe('boolean');
         expect(v).toEqual(booleanResult);
       },
@@ -65,7 +69,7 @@ describe('FlagsmithService', () => {
     });
   });
 
-  it('should get trait', (complete) => {
+  it('should get trait', complete => {
     flagsmithMock.getTrait = jest
       .fn()
       .mockImplementationOnce(async () => traitResult);
@@ -73,7 +77,7 @@ describe('FlagsmithService', () => {
     service
       .getTrait(faker.datatype.string(), faker.datatype.string())
       .subscribe({
-        next: (v) => {
+        next: v => {
           expect(typeof v).toBe('object');
           expect(v).toEqual(traitResult);
         },
@@ -81,13 +85,13 @@ describe('FlagsmithService', () => {
       });
   });
 
-  it('should get flags', (complete) => {
+  it('should get flags', complete => {
     flagsmithMock.getFlags = jest
       .fn()
       .mockImplementationOnce(async () => flagResult);
 
     service.getFlags().subscribe({
-      next: (v) => {
+      next: v => {
         expect(typeof v).toBe('object');
         expect(v).toEqual(flagResult);
       },
@@ -95,13 +99,13 @@ describe('FlagsmithService', () => {
     });
   });
 
-  it('should get flags for user', (complete) => {
+  it('should get flags for user', complete => {
     flagsmithMock.getFlagsForUser = jest
       .fn()
       .mockImplementationOnce(async () => flagResult);
 
     service.getFlagsForUser(faker.datatype.string()).subscribe({
-      next: (v) => {
+      next: v => {
         expect(typeof v).toBe('object');
         expect(v).toEqual(flagResult);
       },
@@ -109,13 +113,13 @@ describe('FlagsmithService', () => {
     });
   });
 
-  it('should get user identity', (complete) => {
+  it('should get user identity', complete => {
     flagsmithMock.getUserIdentity = jest
       .fn()
       .mockImplementationOnce(async () => identityResult);
 
     service.getUserIdentity(faker.datatype.string()).subscribe({
-      next: (v) => {
+      next: v => {
         expect(typeof v).toBe('object');
         expect(v).toEqual(identityResult);
       },
@@ -123,10 +127,10 @@ describe('FlagsmithService', () => {
     });
   });
 
-  it('should set traits', (complete) => {
+  it('should set traits', complete => {
     flagsmithMock.setTrait = jest
       .fn()
-      .mockImplementationOnce(() => identityResult);
+      .mockImplementationOnce(() => Promise.resolve(identityResult));
 
     service
       .setTrait(
@@ -139,9 +143,8 @@ describe('FlagsmithService', () => {
         ]),
       )
       .subscribe({
-        next: (v) => {
+        next: v => {
           expect(typeof v).toBe('object');
-          console.log(v);
           expect(v).toEqual(identityResult);
         },
         complete,
