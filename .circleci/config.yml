@@ -10,7 +10,7 @@ aliases:
   - &install-deps
     run:
       name: Install dependencies
-      command: npm install
+      command: npm install --force
   - &update-npm
     run:
       name: Update NPM version
