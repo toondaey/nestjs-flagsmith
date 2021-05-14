@@ -75,5 +75,16 @@
     "flagsmith-nodejs": "^1.1.0",
     "reflect-metadata": "^0.1.12",
     "rxjs": "^6.0.0"
-  }
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/toondaey/nestjs-flagsmith.git"
+  },
+  "bugs": {
+    "url": "https://github.com/toondaey/nestjs-flagsmith/issues"
+  },
+  "homepage": "https://github.com/toondaey/nestjs-flagsmith#readme"
 }
