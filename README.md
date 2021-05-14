@@ -2,7 +2,7 @@
 
 <p align="center">
     <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-    <img src="https://docs.flagsmith.com/images/logo.png" width="120" alt="Flagsmith Logo" />
+    <img src="https://docs.flagsmith.com/images/logo.png" width="120" alt="Flagsmith Logo" style='background-color:"#5D60CC"'/>
 </p>
 
 <p align='center'>
