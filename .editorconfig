@@ -14,3 +14,4 @@ insert_final_newline = ignore
 
 [*.md]
 trim_trailing_whitespace = false
+indent_size = 4
